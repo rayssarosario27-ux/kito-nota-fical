@@ -6,13 +6,13 @@ function setupHomeNavigation() {
   if (cardGerar) {
     cardGerar.onclick = (e) => {
       e.preventDefault();
-      window.location.assign(window.location.origin + '/gerar.html');
+      window.location.href = 'gerar.html';
     };
   }
   if (cardVisualizar) {
     cardVisualizar.onclick = (e) => {
       e.preventDefault();
-      window.location.assign(window.location.origin + '/visualizar.html');
+      window.location.href = 'visualizar.html';
     };
   }
 }
