@@ -206,9 +206,14 @@ function renderHome() {
   setupHomeNavigation();
 }
 
+
 // Inicialização SPA após DOM pronto
 window.addEventListener('DOMContentLoaded', () => {
-  renderHome();
+  if (window.location.pathname.endsWith('gerar.html')) {
+    renderFormNota();
+  } else {
+    renderHome();
+  }
 });
 
 document.addEventListener('click', (e) => {
