@@ -1,21 +1,23 @@
 // SPA: navegação e renderização dinâmica
 
-function setupHomeNavigation() {
+
+// Navegação SPA compatível com Vercel (links relativos)
+document.addEventListener('DOMContentLoaded', function() {
   const cardGerar = document.getElementById('card-gerar');
   const cardVisualizar = document.getElementById('card-visualizar');
   if (cardGerar) {
     cardGerar.onclick = (e) => {
       e.preventDefault();
-      window.location.href = 'gerar.html';
+      window.location.pathname = window.location.pathname.replace(/\/[^/]*$/, '/gerar.html');
     };
   }
   if (cardVisualizar) {
     cardVisualizar.onclick = (e) => {
       e.preventDefault();
-      window.location.href = 'visualizar.html';
+      window.location.pathname = window.location.pathname.replace(/\/[^/]*$/, '/visualizar.html');
     };
   }
-}
+});
 
 // Carrega jsPDF de CDN
 const script = document.createElement('script');

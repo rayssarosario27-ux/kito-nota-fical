@@ -1,4 +1,71 @@
-/* --- LAYOUT MODERNO E FUTURISTA --- */
+/* --- LAYOUT MODERNO, MINIMALISTA E FUTURISTA --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap');
+
+body, html {
+  font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+  background: linear-gradient(135deg, #181c2a 0%, #232a4d 60%, #0a0c13 100%);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.minimal-home {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.main-title-home {
+  color: #00eaff;
+  font-size: 2.5em;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-align: center;
+  margin: 48px 0 36px 0;
+  text-shadow: 0 2px 18px #232a4d99, 0 1px 8px #00eaff44;
+}
+
+.card-nav-container-home {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.card-nav-home {
+  background: rgba(0,234,255,0.08);
+  border: 1.5px solid #00eaff44;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #00eaff11;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  min-width: 220px;
+}
+.card-nav-home:hover {
+  background: linear-gradient(90deg, #00eaff 0%, #3949ab 100%);
+  color: #fff;
+  box-shadow: 0 6px 24px #00eaff44;
+  transform: translateY(-2px) scale(1.03);
+}
+.card-icon-home {
+  font-size: 2.2em;
+  margin-bottom: 12px;
+}
+.card-title-home {
+  font-size: 1.18em;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Remove logo do topo e cabeçalho antigo */
+.main-header-home, .brand-header, .logo-img {
+  display: none !important;
+}
 .futurista {
   background: linear-gradient(135deg, #181c2a 0%, #232a4d 60%, #0a0c13 100%);
   box-shadow: 0 8px 40px 0 #00eaff33, 0 1.5px 6px #00eaff22;
