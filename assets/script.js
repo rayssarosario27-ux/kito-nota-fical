@@ -200,28 +200,7 @@ function renderFormNota() {
 }
 
 function renderHome() {
-  const container = document.querySelector('.container');
-  container.innerHTML = `
-    <header class="main-header-home">
-      <div class="logo-title-wrap">
-        <img src="assets/logo.png" alt="Logo Kito Locações" class="logo-img-home">
-        <span class="header-title-home">Kito Locações</span>
-      </div>
-    </header>
-    <main>
-      <div class="card-nav-container-home">
-        <div class="card-nav-home" id="card-gerar">
-          <span class="card-icon-home">📝</span>
-          <span class="card-title-home">Gerar Nota Fiscal</span>
-        </div>
-        <div class="card-nav-home" id="card-visualizar">
-          <span class="card-icon-home">📄</span>
-          <span class="card-title-home">Visualizar Notas</span>
-        </div>
-      </div>
-      <div id="app-content"></div>
-    </main>
-  `;
+  // Não sobrescreve mais o HTML, apenas ativa navegação se necessário
   setupHomeNavigation();
 }
 
@@ -238,33 +217,5 @@ document.addEventListener('click', (e) => {
 });
 
 function renderVisualizarNotas() {
-  const appContent = document.getElementById('app-content');
-  appContent.innerHTML = `
-    <div class="container">
-      <div class="brand-header centered" style="margin-bottom: 0;">
-        <img src="assets/logo.png" alt="Logo Kito Locações" class="logo-img" style="margin-bottom: 0;" />
-        <div class="brand-title"><h1>Kito Locações</h1><span class="slogan">Aluguel de Mesas e Cadeiras</span></div>
-      </div>
-      <div class="form-section">
-        <div class="section-title">Filtrar Notas</div>
-        <div class="filtros-notas">
-          <label>Dia
-            <input type="date" id="filtro-dia">
-          </label>
-          <label>Mês
-            <input type="month" id="filtro-mes">
-          </label>
-          <label>Nome/Empresa
-            <input type="text" id="filtro-nome" placeholder="Nome ou Empresa">
-          </label>
-        </div>
-      </div>
-      <div class="form-section">
-        <div class="section-title">Notas Encontradas</div>
-        <div id="notas-lista">
-          <div class="nota-card-mock">Nenhuma nota encontrada (mock)</div>
-        </div>
-      </div>
-    </div>
-  `;
+  // Não sobrescreve mais o HTML, apenas limpa ou ativa navegação se necessário
 }
