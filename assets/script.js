@@ -4,13 +4,15 @@ function setupHomeNavigation() {
   const cardGerar = document.getElementById('card-gerar');
   const cardVisualizar = document.getElementById('card-visualizar');
   if (cardGerar) {
-    cardGerar.onclick = () => {
-      window.location.href = 'gerar.html';
+    cardGerar.onclick = (e) => {
+      e.preventDefault();
+      window.location.assign(window.location.origin + '/gerar.html');
     };
   }
   if (cardVisualizar) {
-    cardVisualizar.onclick = () => {
-      window.location.href = 'visualizar.html';
+    cardVisualizar.onclick = (e) => {
+      e.preventDefault();
+      window.location.assign(window.location.origin + '/visualizar.html');
     };
   }
 }
