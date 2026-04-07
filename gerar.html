@@ -11,16 +11,57 @@
 </head>
 <body>
   <div class="container">
-    <div id="app-content"></div>
+    <h1 class="header-title-home">Gerar Nota Fiscal</h1>
+    <form id="rentalForm">
+      <div class="form-section">
+        <div class="section-title">Dados do Cliente</div>
+        <div class="form-row">
+          <label>Nome do Cliente
+            <input type="text" name="cliente" required placeholder="Nome completo">
+          </label>
+          <label>CPF/CNPJ
+            <input type="text" name="cpf_cnpj" required maxlength="14" pattern="\d+" placeholder="Somente números">
+          </label>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="section-title">Dados do Aluguel</div>
+        <div class="form-row">
+          <label>Data de Emissão
+            <input type="date" name="data_emissao" required>
+          </label>
+          <label>Período do Aluguel
+            <input type="date" name="data_inicio" required> até <input type="date" name="data_fim" required>
+          </label>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="section-title">Itens Alugados</div>
+        <div class="form-row" style="gap: 32px;">
+          <label class="checkbox-label">
+            <input type="checkbox" name="usar_mesas" id="usar_mesas" checked>
+            Mesas
+            <input type="number" name="qtd_mesas" id="qtd_mesas" min="0" value="0" style="width:80px; margin-left:8px;">
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="usar_cadeiras" id="usar_cadeiras" checked>
+            Cadeiras
+            <input type="number" name="qtd_cadeiras" id="qtd_cadeiras" min="0" value="0" style="width:80px; margin-left:8px;">
+          </label>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="section-title">Valor</div>
+        <div class="form-row">
+          <label>Valor Total (R$)
+            <input type="number" name="valor" step="0.01" required>
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn-main">Gerar Nota Fiscal (PDF)</button>
+      <div id="pdfLink"></div>
+    </form>
   </div>
   <script src="assets/script.js"></script>
-  <script>
-    renderFormNota();
-    // Remove logo se existir
-    document.addEventListener('DOMContentLoaded', () => {
-      const logo = document.querySelector('.logo-img');
-      if (logo) logo.remove();
-    });
-  </script>
 </body>
 </html>

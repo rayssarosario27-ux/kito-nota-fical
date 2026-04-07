@@ -11,16 +11,28 @@
 </head>
 <body>
   <div class="container">
-    <div id="app-content"></div>
+    <h1 class="header-title-home">Visualizar Notas</h1>
+    <div class="form-section">
+      <div class="section-title">Filtrar Notas</div>
+      <div class="filtros-notas">
+        <label>Dia
+          <input type="date" id="filtro-dia">
+        </label>
+        <label>Mês
+          <input type="month" id="filtro-mes">
+        </label>
+        <label>Nome/Empresa
+          <input type="text" id="filtro-nome" placeholder="Nome ou Empresa">
+        </label>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="section-title">Notas Encontradas</div>
+      <div id="notas-lista">
+        <div class="nota-card-mock">Nenhuma nota encontrada (mock)</div>
+      </div>
+    </div>
   </div>
   <script src="assets/script.js"></script>
-  <script>
-    renderVisualizarNotas();
-    // Remove logo se existir
-    document.addEventListener('DOMContentLoaded', () => {
-      const logo = document.querySelector('.logo-img');
-      if (logo) logo.remove();
-    });
-  </script>
 </body>
 </html>
