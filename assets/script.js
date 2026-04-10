@@ -347,7 +347,7 @@ function renderFormNota() {
       'O LOCATÁRIO declara receber o mobiliário (mesas e cadeiras) em perfeito estado de conservação e limpeza,',
       'obrigando-se a devolvê-lo da mesma forma.',
       '',
-      '7.1. Danos e Avarias: Em caso de quebra, furos, queimaduras de cigarro, manchas persistentes (tinta, gordura ou mofo)',
+      '7.1. Danos e Avarias: Em caso de quebra, furos, queimaduras de cigarro, manchas persistentes (tinta ou gordura)',
       'ou qualquer dano que inutilize o material, o LOCATÁRIO arcará com o valor de reposição de mercado de cada item danificado.',
       '',
       '7.2. Extravio: Em caso de perda ou furto dos itens locados, o LOCATÁRIO deverá indenizar a Kito Locações',
