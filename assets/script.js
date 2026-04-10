@@ -54,6 +54,9 @@ function renderFormNota() {
             <label>Endereço de Entrega
               <input type="text" name="endereco_entrega" required placeholder="Rua, número, bairro, cidade">
             </label>
+            <label>Contato do Cliente
+              <input type="text" name="contato_cliente" required placeholder="Telefone, WhatsApp ou e-mail">
+            </label>
           </div>
       </div>
       <div class="form-section">
@@ -140,6 +143,7 @@ function renderFormNota() {
     const cliente = form.cliente.value;
     const cpfCnpj = form.cpf_cnpj.value;
     const enderecoEntrega = form.endereco_entrega.value;
+    const contatoCliente = form.contato_cliente.value;
     const dataEmissao = form.data_emissao.value;
     const dataInicio = form.data_inicio.value;
     const dataFim = form.data_fim.value;
@@ -207,6 +211,8 @@ function renderFormNota() {
     doc.text(`CPF/CNPJ: ${cpfCnpj}`, 25, y);
     y += 7;
     doc.text(`Endereço de Entrega: ${enderecoEntrega}`, 25, y);
+    y += 7;
+    doc.text(`Contato: ${contatoCliente}`, 25, y);
 
     // Seção Aluguel
     y += 12;
