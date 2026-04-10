@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
       renderVisualizarNotas();
     };
   }
+});
+
 // Renderização SPA para Visualizar Notas
 function renderVisualizarNotas() {
   const container = document.getElementById('app-content');
