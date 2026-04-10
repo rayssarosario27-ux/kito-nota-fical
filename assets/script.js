@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
       renderVisualizarNotas();
     };
   }
-}
+});
 
 // Renderização SPA para Visualizar Notas
 function renderVisualizarNotas() {
@@ -26,7 +26,6 @@ function renderVisualizarNotas() {
     container.innerHTML = `<div class='nota-card-mock'>Nenhuma nota encontrada (mock)</div>`;
   }
 }
-});
 
 
 // Carrega jsPDF de CDN e garante disponibilidade antes de usar
