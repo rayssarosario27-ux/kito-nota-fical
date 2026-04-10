@@ -50,6 +50,11 @@ function renderFormNota() {
             <input type="text" name="cpf_cnpj" required maxlength="14" pattern="\\d+" placeholder="Somente números">
           </label>
         </div>
+          <div class="form-row">
+            <label>Endereço de Entrega
+              <input type="text" name="endereco_entrega" required placeholder="Rua, número, bairro, cidade">
+            </label>
+          </div>
       </div>
       <div class="form-section">
         <div class="section-title">Dados do Aluguel</div>
@@ -134,6 +139,7 @@ function renderFormNota() {
     const form = e.target;
     const cliente = form.cliente.value;
     const cpfCnpj = form.cpf_cnpj.value;
+    const enderecoEntrega = form.endereco_entrega.value;
     const dataEmissao = form.data_emissao.value;
     const dataInicio = form.data_inicio.value;
     const dataFim = form.data_fim.value;
@@ -199,6 +205,8 @@ function renderFormNota() {
     doc.text(`Nome: ${cliente}`, 25, y);
     y += 7;
     doc.text(`CPF/CNPJ: ${cpfCnpj}`, 25, y);
+    y += 7;
+    doc.text(`Endereço de Entrega: ${enderecoEntrega}`, 25, y);
 
     // Seção Aluguel
     y += 12;
