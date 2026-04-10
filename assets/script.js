@@ -248,24 +248,19 @@ function renderFormNota() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Cabeçalho futurista
-    doc.setFillColor(0, 234, 255);
-    doc.roundedRect(25, 14, 160, 32, 18, 18, 'F');
-    doc.setDrawColor(0, 234, 255);
-    doc.setLineWidth(1.5);
-    doc.roundedRect(25, 14, 160, 32, 18, 18, 'S');
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(10, 30, 80);
-    doc.setFontSize(25);
-    doc.text(empresa.nome, 105, 32, { align: 'center' });
-    doc.setFontSize(14);
-    doc.setTextColor(0, 80, 255);
-    doc.text('Aluguel de Mesas e Cadeiras', 105, 42, { align: 'center' });
 
-    // Linha divisória
-    doc.setDrawColor(0, 234, 255);
-    doc.setLineWidth(1);
-    doc.line(20, 40, 190, 40);
+    // Cabeçalho simples
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(30, 30, 30);
+    doc.setFontSize(20);
+    doc.text(empresa.nome, 105, 22, { align: 'center' });
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(80, 80, 80);
+    doc.text('Aluguel de Mesas e Cadeiras', 105, 30, { align: 'center' });
+    doc.setDrawColor(180, 180, 180);
+    doc.setLineWidth(0.5);
+    doc.line(20, 34, 190, 34);
 
     // Dados da empresa
     doc.setFont('helvetica', 'normal');
@@ -279,11 +274,11 @@ function renderFormNota() {
     // Seção Cliente
     let y = 75;
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
-    doc.setTextColor(0, 234, 255);
+    doc.setFontSize(12);
+    doc.setTextColor(50, 50, 50);
     doc.text('Dados do Cliente', 20, y);
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(11);
+    doc.setFontSize(10);
     doc.setTextColor(33,33,33);
     y += 7;
     doc.text(`Nome: ${cliente}`, 25, y);
@@ -303,11 +298,11 @@ function renderFormNota() {
     // Seção Aluguel
     y += 12;
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
-    doc.setTextColor(0, 234, 255);
+    doc.setFontSize(12);
+    doc.setTextColor(50, 50, 50);
     doc.text('Dados do Aluguel', 20, y);
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(11);
+    doc.setFontSize(10);
     doc.setTextColor(33,33,33);
     y += 7;
     doc.text(`Data de Emissão: ${dataEmissao.split('-').reverse().join('/')}`, 25, y);
@@ -317,11 +312,11 @@ function renderFormNota() {
     // Seção Itens
     y += 12;
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
-    doc.setTextColor(0, 234, 255);
+    doc.setFontSize(12);
+    doc.setTextColor(50, 50, 50);
     doc.text('Itens Alugados', 20, y);
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(11);
+    doc.setFontSize(10);
     doc.setTextColor(33,33,33);
     y += 7;
     doc.text(itensDesc.join(' | '), 25, y);
@@ -329,29 +324,22 @@ function renderFormNota() {
     // Valor
     y += 12;
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
-    doc.setTextColor(0, 234, 255);
+    doc.setFontSize(12);
+    doc.setTextColor(50, 50, 50);
     doc.text('Valor Total', 20, y);
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(13);
+    doc.setFontSize(12);
     doc.setTextColor(33,33,33);
     doc.text(`R$ ${valor}`, 60, y);
 
-    // Assinaturas reforçadas
-    y += 20;
-    doc.setLineWidth(1.2);
-    doc.setDrawColor(0, 234, 255);
-    doc.line(25, y, 100, y); // Cliente
-    doc.line(115, y, 190, y); // Empresa
-    doc.setFontSize(11);
-    doc.setTextColor(0, 80, 255);
-    doc.text('Assinatura do Cliente', 27, y + 7);
-    doc.text('Assinatura Kito Locações', 117, y + 7);
-    y += 18;
     // Cláusula de responsabilidade
-    doc.setTextColor(30, 42, 120);
+    y += 12;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11);
+    doc.setTextColor(80, 80, 80);
     doc.text('Cláusula de Responsabilidade e Danos', 105, y, { align: 'center' });
     y += 7;
+    doc.setFont('helvetica', 'normal');
     doc.setFontSize(9.5);
     doc.setTextColor(60,60,60);
     const clausula = [
@@ -377,19 +365,22 @@ function renderFormNota() {
     });
     y = cy + 6;
     // Checklist de entrega
-    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
     doc.setTextColor(80, 80, 80);
     doc.text('Checklist de Entrega', 105, y, { align: 'center' });
     y += 6;
+    doc.setFont('helvetica', 'normal');
     doc.setFontSize(9.5);
+    doc.setTextColor(60,60,60);
     doc.text(`No momento da entrega, faça o cliente assinar um papel rápido dizendo:`, 20, y, { maxWidth: 170 });
     y += 5;
     doc.setFont('helvetica', 'italic');
     doc.text(`"Recebi ${qtdMesas} mesas e ${qtdCadeiras} cadeiras em bom estado."`, 25, y, { maxWidth: 160 });
     doc.setFont('helvetica', 'normal');
-    y += 8;
-    // Espaço para assinaturas
-    doc.setLineWidth(1.2);
+    y += 12;
+    // Assinaturas (após cláusulas)
+    doc.setLineWidth(0.5);
     doc.setDrawColor(120, 120, 120);
     doc.line(25, y, 100, y); // Cliente
     doc.line(115, y, 190, y); // Empresa
