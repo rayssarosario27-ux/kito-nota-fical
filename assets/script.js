@@ -361,10 +361,9 @@ function renderFormNota() {
     let cy = y + 4;
     clausula.forEach(l => {
       doc.text(l, 20, cy, { maxWidth: 170 });
-      cy += 7.2;
+      cy += 5;
     });
-    y = cy + 40; // Espaço extra maior para as assinaturas ficarem visíveis
-    if (y > 260) y = 260; // Garante que não ultrapasse o limite da página
+    y = cy + 20; // Espaço compacto, assinaturas logo abaixo
     // Assinaturas (após cláusulas, centralizadas)
     doc.setLineWidth(0.5);
     doc.setDrawColor(120, 120, 120);
