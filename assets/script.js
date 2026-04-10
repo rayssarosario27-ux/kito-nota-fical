@@ -361,32 +361,16 @@ function renderFormNota() {
     let cy = y + 4;
     clausula.forEach(l => {
       doc.text(l, 20, cy, { maxWidth: 170 });
-      cy += 5.2;
-    });
-    y = cy + 6;
-    // Checklist de entrega
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10);
-    doc.setTextColor(80, 80, 80);
-    doc.text('Checklist de Entrega', 105, y, { align: 'center' });
-    y += 6;
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9.5);
-    doc.setTextColor(60,60,60);
-    doc.text(`No momento da entrega, faça o cliente assinar um papel rápido dizendo:`, 20, y, { maxWidth: 170 });
-    y += 5;
-    doc.setFont('helvetica', 'italic');
-    doc.text(`"Recebi ${qtdMesas} mesas e ${qtdCadeiras} cadeiras em bom estado."`, 25, y, { maxWidth: 160 });
-    doc.setFont('helvetica', 'normal');
-    y += 12;
-    // Assinaturas (após cláusulas)
-    doc.setLineWidth(0.5);
-    doc.setDrawColor(120, 120, 120);
-    doc.line(25, y, 100, y); // Cliente
-    doc.line(115, y, 190, y); // Empresa
-    doc.setFontSize(10);
-    doc.setTextColor(120,120,120);
-    doc.text('Assinatura do Cliente', 27, y + 7);
+      y = cy + 16;
+      // Assinaturas (após cláusulas, centralizadas)
+      doc.setLineWidth(0.5);
+      doc.setDrawColor(120, 120, 120);
+      doc.line(35, y, 95, y); // Cliente
+      doc.line(115, y, 175, y); // Empresa
+      doc.setFontSize(10);
+      doc.setTextColor(120,120,120);
+      doc.text('Assinatura do Cliente', 65, y + 7, { align: 'center' });
+      doc.text('Assinatura Kito Locações', 145, y + 7, { align: 'center' });
     doc.text('Assinatura Kito Locações', 117, y + 7);
     // Baixa PDF
     doc.save(`Nota_Kito_Locacoes_${cliente.replace(/\s+/g, '_')}.pdf`);
