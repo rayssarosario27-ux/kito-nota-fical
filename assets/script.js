@@ -166,7 +166,6 @@ function renderFormNota() {
       v = v.replace(/(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d{1,2})/, '$1.$2.$3/$4-$5');
     }
     e.target.value = v;
-// FIM DO SCRIPT PRINCIPAL
   // Máscara de celular
   const celInput = document.querySelector('input[name="celular_cliente"]');
   celInput.addEventListener('input', (e) => {
