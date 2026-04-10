@@ -33,8 +33,28 @@ script.onload = () => {
 document.head.appendChild(script);
 
 function renderFormNota() {
-  const appContent = document.getElementById('app-content');
-  appContent.innerHTML = `
+  // Se existir #app-content, renderiza nele (SPA); senão, usa o body (gerar.html)
+  let container;
+  if (document.getElementById('app-content')) {
+    container = document.getElementById('app-content');
+    container.innerHTML = `
+      <form id="rentalForm" class="container">
+        ...existing code...
+      </form>
+    `;
+  } else {
+    container = document.querySelector('.container.futurista');
+    // Não sobrescreve o botão voltar e título, só o form
+    const formSection = container.querySelector('form#rentalForm');
+    if (formSection) formSection.remove();
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <form id="rentalForm">
+        ...existing code...
+      </form>
+    `;
+    container.appendChild(div.firstElementChild);
+  }
     <form id="rentalForm" class="container">
       <div class="brand-header centered" style="margin-bottom: 0;">
         <img src="assets/logo.png" alt="Logo Kito Locações" class="logo-img" style="margin-bottom: 0;" />
