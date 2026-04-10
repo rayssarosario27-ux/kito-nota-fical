@@ -399,5 +399,4 @@ function renderFormNota() {
     doc.text('Assinatura Kito Locações', 117, y + 7);
     // Baixa PDF
     doc.save(`Nota_Kito_Locacoes_${cliente.replace(/\s+/g, '_')}.pdf`);
-  }
   });
