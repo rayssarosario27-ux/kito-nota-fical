@@ -38,7 +38,10 @@ function renderFormNota() {
     <form id="rentalForm" class="container">
       <div class="brand-header centered" style="margin-bottom: 0;">
         <img src="assets/logo.png" alt="Logo Kito Locações" class="logo-img" style="margin-bottom: 0;" />
-        <div class="brand-title"><h1>Kito Locações</h1><span class="slogan">Aluguel de Mesas e Cadeiras</span></div>
+        <div class="brand-title">
+          <h1 style="font-size:2.1em; font-weight:900; color:#00eaff; letter-spacing:2px; margin-bottom:0;">Kito Locações</h1>
+          <span class="slogan" style="font-size:1.1em; color:#232a4d; font-weight:700;">Aluguel de Mesas e Cadeiras</span>
+        </div>
       </div>
       <div class="form-section">
         <div class="section-title">Dados do Cliente</div>
@@ -47,17 +50,28 @@ function renderFormNota() {
             <input type="text" name="cliente" required placeholder="Nome completo">
           </label>
           <label>CPF/CNPJ
-            <input type="text" name="cpf_cnpj" required maxlength="14" pattern="\\d+" placeholder="Somente números">
+            <input type="text" name="cpf_cnpj" required maxlength="14" pattern="\d+" placeholder="Somente números">
           </label>
         </div>
-          <div class="form-row">
-            <label>Endereço de Entrega
-              <input type="text" name="endereco_entrega" required placeholder="Rua, número, bairro, cidade">
-            </label>
-            <label>Contato do Cliente
-              <input type="text" name="contato_cliente" required placeholder="Telefone, WhatsApp ou e-mail">
-            </label>
-          </div>
+        <div class="form-row">
+          <label>Endereço de Entrega
+            <input type="text" name="endereco_entrega" required placeholder="Rua, número, bairro, cidade">
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Celular
+            <input type="text" name="celular_cliente" required placeholder="(99) 99999-9999" maxlength="15">
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;">
+            <input type="checkbox" id="soCelular" name="soCelular" checked style="width:18px; height:18px;"> Somente celular
+          </label>
+        </div>
+        <div class="form-row" id="emailRow" style="display:none;">
+          <label>Email
+            <input type="email" name="email_cliente" placeholder="email@exemplo.com">
+          </label>
+        </div>
+      </div>
       </div>
       <div class="form-section">
         <div class="section-title">Dados do Aluguel</div>
@@ -117,6 +131,22 @@ function renderFormNota() {
   cpfCnpjInput.addEventListener('input', (e) => {
     e.target.value = e.target.value.replace(/\D/g, '');
   });
+  // Máscara de celular
+  const celInput = document.querySelector('input[name="celular_cliente"]');
+  celInput.addEventListener('input', (e) => {
+    let v = e.target.value.replace(/\D/g, '');
+    if (v.length > 11) v = v.slice(0,11);
+    if (v.length > 6) e.target.value = v.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    else if (v.length > 2) e.target.value = v.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+    else e.target.value = v;
+  });
+  // Alternar campo email
+  const soCelular = document.getElementById('soCelular');
+  const emailRow = document.getElementById('emailRow');
+  soCelular.addEventListener('change', () => {
+    emailRow.style.display = soCelular.checked ? 'none' : 'flex';
+    document.querySelector('input[name="email_cliente"]').required = !soCelular.checked;
+  });
 
   // Alinhar checkboxes e quantidades
   const usarMesas = document.getElementById('usar_mesas');
@@ -143,7 +173,8 @@ function renderFormNota() {
     const cliente = form.cliente.value;
     const cpfCnpj = form.cpf_cnpj.value;
     const enderecoEntrega = form.endereco_entrega.value;
-    const contatoCliente = form.contato_cliente.value;
+    const celularCliente = form.celular_cliente.value;
+    const emailCliente = form.soCelular.checked ? '' : form.email_cliente.value;
     const dataEmissao = form.data_emissao.value;
     const dataInicio = form.data_inicio.value;
     const dataFim = form.data_fim.value;
@@ -159,7 +190,7 @@ function renderFormNota() {
       cpf: '145.452.747-14',
       endereco: 'Rua Maria Botelho Santiago, 326 - Campo Grande, Rio de Janeiro',
       telefone: '(21) 96912-8210',
-      email: 'marcosandredosantos@27gmail.com'
+      email: 'marcosandredosantos97@gmail.com'
     };
 
     // Monta descrição dos itens
@@ -172,15 +203,16 @@ function renderFormNota() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Cabeçalho com cor e título
+    // Cabeçalho profissional
     doc.setFillColor(0, 234, 255);
-    doc.roundedRect(10, 10, 190, 25, 8, 8, 'F');
+    doc.roundedRect(20, 12, 170, 28, 12, 12, 'F');
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(30, 42, 120);
-    doc.setFontSize(22);
-    doc.text(empresa.nome, 105, 25, { align: 'center' });
-    doc.setFontSize(12);
-    doc.text('Aluguel de Mesas e Cadeiras', 105, 33, { align: 'center' });
+    doc.setFontSize(24);
+    doc.text(empresa.nome, 105, 28, { align: 'center' });
+    doc.setFontSize(13);
+    doc.setTextColor(33,33,33);
+    doc.text('Aluguel de Mesas e Cadeiras', 105, 38, { align: 'center' });
 
     // Linha divisória
     doc.setDrawColor(0, 234, 255);
@@ -212,7 +244,11 @@ function renderFormNota() {
     y += 7;
     doc.text(`Endereço de Entrega: ${enderecoEntrega}`, 25, y);
     y += 7;
-    doc.text(`Contato: ${contatoCliente}`, 25, y);
+    doc.text(`Celular: ${celularCliente}`, 25, y);
+    if (emailCliente) {
+      y += 7;
+      doc.text(`Email: ${emailCliente}`, 25, y);
+    }
 
     // Seção Aluguel
     y += 12;
@@ -251,13 +287,15 @@ function renderFormNota() {
     doc.setTextColor(33,33,33);
     doc.text(`R$ ${valor}`, 60, y);
 
-    // Espaço para assinatura
+    // Espaço para assinaturas
     y += 20;
     doc.setDrawColor(200,200,200);
-    doc.line(25, y, 120, y);
+    doc.line(25, y, 100, y); // Cliente
+    doc.line(115, y, 190, y); // Empresa
     doc.setFontSize(10);
     doc.setTextColor(120,120,120);
     doc.text('Assinatura do Cliente', 27, y + 6);
+    doc.text('Assinatura Kito Locações', 117, y + 6);
 
     // Baixa PDF
     doc.save(`nota-fiscal-${cliente.replace(/\s+/g, '_')}.pdf`);
