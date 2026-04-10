@@ -361,17 +361,18 @@ function renderFormNota() {
     let cy = y + 4;
     clausula.forEach(l => {
       doc.text(l, 20, cy, { maxWidth: 170 });
-      y = cy + 16;
-      // Assinaturas (após cláusulas, centralizadas)
-      doc.setLineWidth(0.5);
-      doc.setDrawColor(120, 120, 120);
-      doc.line(35, y, 95, y); // Cliente
-      doc.line(115, y, 175, y); // Empresa
-      doc.setFontSize(10);
-      doc.setTextColor(120,120,120);
-      doc.text('Assinatura do Cliente', 65, y + 7, { align: 'center' });
-      doc.text('Assinatura Kito Locações', 145, y + 7, { align: 'center' });
-    doc.text('Assinatura Kito Locações', 117, y + 7);
+      cy += 5.2;
+    });
+    y = cy + 16;
+    // Assinaturas (após cláusulas, centralizadas)
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(120, 120, 120);
+    doc.line(35, y, 95, y); // Cliente
+    doc.line(115, y, 175, y); // Empresa
+    doc.setFontSize(10);
+    doc.setTextColor(120,120,120);
+    doc.text('Assinatura do Cliente', 65, y + 7, { align: 'center' });
+    doc.text('Assinatura Kito Locações', 145, y + 7, { align: 'center' });
     // Baixa PDF
     doc.save(`Nota_Kito_Locacoes_${cliente.replace(/\s+/g, '_')}.pdf`);
   }); // FECHA O SUBMIT
