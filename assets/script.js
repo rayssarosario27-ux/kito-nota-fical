@@ -379,23 +379,73 @@ function renderFormNota() {
     });
 
     // Baixa PDF
-    doc.save(`nota-fiscal-${cliente.replace(/\s+/g, '_')}.pdf`);
-    document.getElementById('pdfLink').innerHTML = '<span style="color:#00eaff">PDF gerado e baixado!</span>';
-  });
-}
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(60, 60, 60);
+    doc.text('Itens Alugados', 20, y);
 
 function renderHome() {
   // Não sobrescreve mais o HTML, apenas ativa navegação se necessário
-  setupHomeNavigation();
-}
-
-
-// Inicialização SPA após DOM pronto
-window.addEventListener('DOMContentLoaded', () => {
-  if (window.location.pathname.endsWith('gerar.html')) {
-    renderFormNota();
-  } else {
+    y += 12;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(60, 60, 60);
+    doc.text('Valor Total', 20, y);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(13);
+    doc.setTextColor(33,33,33);
+    doc.text(`R$ ${valor}`, 60, y);
     renderHome();
+    // Cláusula de responsabilidade (antes das assinaturas)
+    y += 18;
+    doc.setFontSize(11);
+    doc.setTextColor(60, 60, 60);
+    doc.text('Cláusula de Responsabilidade e Danos', 105, y, { align: 'center' });
+    y += 7;
+    doc.setFontSize(9.5);
+    const clausula = [
+      '7. DA CONSERVAÇÃO E DEVOLUÇÃO:',
+      'O LOCATÁRIO declara receber o mobiliário (mesas e cadeiras) em perfeito estado de conservação e limpeza,',
+      'obrigando-se a devolvê-lo da mesma forma.',
+      '',
+      '7.1. Danos e Avarias: Em caso de quebra, furos, queimaduras de cigarro, manchas persistentes (tinta, gordura ou mofo)',
+      'ou qualquer dano que inutilize o material, o LOCATÁRIO arcará com o valor de reposição de mercado de cada item danificado.',
+      '',
+      '7.2. Extravio: Em caso de perda ou furto dos itens locados, o LOCATÁRIO deverá indenizar a Kito Locações',
+      'pelo valor total de um item novo equivalente.',
+      '',
+      '7.3. Limpeza: As mesas e cadeiras não devem ser riscadas ou receber colagem de adesivos/fitas que danifiquem a pintura ou o material plástico.',
+      '',
+      '7.4. Prazo: A não devolução na data estipulada acarretará em multa diária de 10% sobre o valor total do contrato,',
+      'além do custo da diária adicional.'
+    ];
+    let cy = y + 4;
+    clausula.forEach(l => {
+      doc.text(l, 20, cy, { maxWidth: 170 });
+      cy += 5.2;
+    });
+    y = cy + 6;
+    // Checklist de entrega
+    doc.setFontSize(11);
+    doc.setTextColor(80, 80, 80);
+    doc.text('Checklist de Entrega', 105, y, { align: 'center' });
+    y += 6;
+    doc.setFontSize(9.5);
+    doc.text(`No momento da entrega, faça o cliente assinar um papel rápido dizendo:`, 20, y, { maxWidth: 170 });
+    y += 5;
+    doc.setFont('helvetica', 'italic');
+    doc.text(`"Recebi ${qtdMesas} mesas e ${qtdCadeiras} cadeiras em bom estado."`, 25, y, { maxWidth: 160 });
+    doc.setFont('helvetica', 'normal');
+    y += 8;
+    // Espaço para assinaturas
+    doc.setLineWidth(1.2);
+    doc.setDrawColor(120, 120, 120);
+    doc.line(25, y, 100, y); // Cliente
+    doc.line(115, y, 190, y); // Empresa
+    doc.setFontSize(10);
+    doc.setTextColor(120,120,120);
+    doc.text('Assinatura do Cliente', 27, y + 7);
+    doc.text('Assinatura Kito Locações', 117, y + 7);
   }
 });
 
