@@ -1,3 +1,4 @@
+console.log('Kito SPA JS carregado');
 // SPA: navegação e renderização dinâmica
 
 
