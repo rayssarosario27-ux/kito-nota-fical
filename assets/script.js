@@ -1,9 +1,7 @@
 console.log('Kito SPA JS carregado');
 // SPA: navegação e renderização dinâmica
 
-
-// Navegação SPA compatível com Vercel (links relativos)
-document.addEventListener('DOMContentLoaded', function() {
+function setupKitoSPA() {
   const cardGerar = document.getElementById('card-gerar');
   const cardVisualizar = document.getElementById('card-visualizar');
   if (cardGerar) {
@@ -18,7 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
       renderVisualizarNotas();
     };
   }
-});
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupKitoSPA);
+} else {
+  setupKitoSPA();
+}
 
 // Renderização SPA para Visualizar Notas
 function renderVisualizarNotas() {
