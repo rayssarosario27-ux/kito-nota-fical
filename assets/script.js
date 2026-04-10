@@ -363,7 +363,7 @@ function renderFormNota() {
       doc.text(l, 20, cy, { maxWidth: 170 });
       cy += 7.2;
     });
-    y = cy + 16;
+    y = cy + 24; // Espaço extra para as assinaturas ficarem visíveis
     // Assinaturas (após cláusulas, centralizadas)
     doc.setLineWidth(0.5);
     doc.setDrawColor(120, 120, 120);
