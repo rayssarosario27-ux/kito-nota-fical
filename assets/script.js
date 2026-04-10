@@ -336,59 +336,11 @@ function renderFormNota() {
     doc.text('Assinatura Kito Locações', 117, y + 7);
     y += 18;
     // Cláusula de responsabilidade
-    doc.setFontSize(11);
     doc.setTextColor(30, 42, 120);
     doc.text('Cláusula de Responsabilidade e Danos', 105, y, { align: 'center' });
     y += 7;
     doc.setFontSize(9.5);
     doc.setTextColor(60,60,60);
-    const clausula = [
-      '7. DA CONSERVAÇÃO E DEVOLUÇÃO:',
-      'O LOCATÁRIO declara receber o mobiliário (mesas e cadeiras) em perfeito estado de conservação e limpeza,',
-      'obrigando-se a devolvê-lo da mesma forma.',
-      '',
-      '7.1. Danos e Avarias: Em caso de quebra, furos, queimaduras de cigarro, manchas persistentes (tinta, gordura ou mofo)',
-      'ou qualquer dano que inutilize o material, o LOCATÁRIO arcará com o valor de reposição de mercado de cada item danificado.',
-      '',
-      '7.2. Extravio: Em caso de perda ou furto dos itens locados, o LOCATÁRIO deverá indenizar a Kito Locações',
-      'pelo valor total de um item novo equivalente.',
-      '',
-      '7.3. Limpeza: As mesas e cadeiras não devem ser riscadas ou receber colagem de adesivos/fitas que danifiquem a pintura ou o material plástico.',
-      '',
-      '7.4. Prazo: A não devolução na data estipulada acarretará em multa diária de 10% sobre o valor total do contrato,',
-      'além do custo da diária adicional.'
-    ];
-    let cy = y + 4;
-    clausula.forEach(l => {
-      doc.text(l, 20, cy, { maxWidth: 170 });
-      cy += 5.2;
-    });
-
-    // Baixa PDF
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
-    doc.setTextColor(60, 60, 60);
-    doc.text('Itens Alugados', 20, y);
-
-function renderHome() {
-  // Não sobrescreve mais o HTML, apenas ativa navegação se necessário
-    y += 12;
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
-    doc.setTextColor(60, 60, 60);
-    doc.text('Valor Total', 20, y);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(13);
-    doc.setTextColor(33,33,33);
-    doc.text(`R$ ${valor}`, 60, y);
-    renderHome();
-    // Cláusula de responsabilidade (antes das assinaturas)
-    y += 18;
-    doc.setFontSize(11);
-    doc.setTextColor(60, 60, 60);
-    doc.text('Cláusula de Responsabilidade e Danos', 105, y, { align: 'center' });
-    y += 7;
-    doc.setFontSize(9.5);
     const clausula = [
       '7. DA CONSERVAÇÃO E DEVOLUÇÃO:',
       'O LOCATÁRIO declara receber o mobiliário (mesas e cadeiras) em perfeito estado de conservação e limpeza,',
@@ -432,16 +384,6 @@ function renderHome() {
     doc.setTextColor(120,120,120);
     doc.text('Assinatura do Cliente', 27, y + 7);
     doc.text('Assinatura Kito Locações', 117, y + 7);
-  }
-});
-
-document.addEventListener('click', (e) => {
-  if (e.target.classList.contains('logo-img-home') || e.target.classList.contains('header-title-home')) {
-    renderHome();
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  }
-});
-
-function renderVisualizarNotas() {
-  // Não sobrescreve mais o HTML, apenas limpa ou ativa navegação se necessário
-}
+    // Baixa PDF
+    doc.save(`Nota_Kito_Locacoes_${cliente.replace(/\s+/g, '_')}.pdf`);
+  });
