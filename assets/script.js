@@ -158,56 +158,83 @@ function renderFormNota() {
     if (cadeirasMarcado && qtdCadeiras > 0) itensDesc.push(`${qtdCadeiras} cadeira(s)`);
     if (itensDesc.length === 0) itensDesc.push('Nenhum item selecionado');
 
-    // Gera PDF futurista
+    // Gera PDF com layout moderno
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    // Cabeçalho visual
-    doc.setFillColor(30, 42, 120);
-    doc.roundedRect(15, 12, 180, 28, 10, 10, 'F');
+
+    // Cabeçalho com cor e título
+    doc.setFillColor(0, 234, 255);
+    doc.roundedRect(10, 10, 190, 25, 8, 8, 'F');
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(255,255,255);
-    doc.setFontSize(20);
-    doc.text(empresa.nome, 25, 28);
+    doc.setTextColor(30, 42, 120);
+    doc.setFontSize(22);
+    doc.text(empresa.nome, 105, 25, { align: 'center' });
     doc.setFontSize(12);
-    doc.text('Aluguel de Mesas e Cadeiras', 120, 28);
+    doc.text('Aluguel de Mesas e Cadeiras', 105, 33, { align: 'center' });
+
+    // Linha divisória
+    doc.setDrawColor(0, 234, 255);
+    doc.setLineWidth(1);
+    doc.line(20, 40, 190, 40);
 
     // Dados da empresa
     doc.setFont('helvetica', 'normal');
-    doc.setTextColor(0,234,255);
     doc.setFontSize(10);
-    doc.text(`CPF: ${empresa.cpf}`, 25, 36);
-    doc.text(`Endereço: ${empresa.endereco}`, 25, 41);
-    doc.text(`Tel: ${empresa.telefone}  |  ${empresa.email}`, 25, 46);
+    doc.setTextColor(80, 80, 80);
+    doc.text(`CPF: ${empresa.cpf}`, 20, 47);
+    doc.text(`Endereço: ${empresa.endereco}`, 20, 53);
+    doc.text(`Tel: ${empresa.telefone}`, 20, 59);
+    doc.text(`Email: ${empresa.email}`, 20, 65);
 
-    // Seção Nota Fiscal
+    // Seção Cliente
+    let y = 75;
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(14);
-    doc.setTextColor(30, 42, 120);
-    doc.text('NOTA FISCAL DE ALUGUEL', 25, 58);
-    doc.setDrawColor(0,234,255);
-    doc.line(25, 60, 185, 60);
-
-    // Dados do cliente e aluguel
+    doc.setFontSize(13);
+    doc.setTextColor(0, 234, 255);
+    doc.text('Dados do Cliente', 20, y);
     doc.setFont('helvetica', 'normal');
-    doc.setTextColor(33,33,33);
     doc.setFontSize(11);
-    let y = 70;
-    doc.text(`Cliente:`, 25, y);
-    doc.text(cliente, 60, y);
+    doc.setTextColor(33,33,33);
     y += 7;
-    doc.text(`CPF/CNPJ:`, 25, y);
-    doc.text(cpfCnpj, 60, y);
+    doc.text(`Nome: ${cliente}`, 25, y);
     y += 7;
-    doc.text(`Data de Emissão:`, 25, y);
-    doc.text(dataEmissao, 70, y);
+    doc.text(`CPF/CNPJ: ${cpfCnpj}`, 25, y);
+
+    // Seção Aluguel
+    y += 12;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(0, 234, 255);
+    doc.text('Dados do Aluguel', 20, y);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11);
+    doc.setTextColor(33,33,33);
     y += 7;
-    doc.text(`Período do Aluguel:`, 25, y);
-    doc.text(`${dataInicio.split('-').reverse().join('/')} à ${dataFim.split('-').reverse().join('/')}`, 70, y);
+    doc.text(`Data de Emissão: ${dataEmissao.split('-').reverse().join('/')}`, 25, y);
     y += 7;
-    doc.text(`Itens Alugados:`, 25, y);
-    doc.text(itensDesc.join(' | '), 70, y);
+    doc.text(`Período: ${dataInicio.split('-').reverse().join('/')} à ${dataFim.split('-').reverse().join('/')}`, 25, y);
+
+    // Seção Itens
+    y += 12;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(0, 234, 255);
+    doc.text('Itens Alugados', 20, y);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11);
+    doc.setTextColor(33,33,33);
     y += 7;
-    doc.text(`Valor Total:`, 25, y);
+    doc.text(itensDesc.join(' | '), 25, y);
+
+    // Valor
+    y += 12;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(0, 234, 255);
+    doc.text('Valor Total', 20, y);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(13);
+    doc.setTextColor(33,33,33);
     doc.text(`R$ ${valor}`, 60, y);
 
     // Espaço para assinatura
