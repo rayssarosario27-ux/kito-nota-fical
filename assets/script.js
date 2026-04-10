@@ -33,28 +33,8 @@ script.onload = () => {
 document.head.appendChild(script);
 
 function renderFormNota() {
-  // Se existir #app-content, renderiza nele (SPA); senão, usa o body (gerar.html)
-  let container;
-  if (document.getElementById('app-content')) {
-    container = document.getElementById('app-content');
-    container.innerHTML = `
-      <form id="rentalForm" class="container">
-        ...existing code...
-      </form>
-    `;
-  } else {
-    container = document.querySelector('.container.futurista');
-    // Não sobrescreve o botão voltar e título, só o form
-    const formSection = container.querySelector('form#rentalForm');
-    if (formSection) formSection.remove();
-    const div = document.createElement('div');
-    div.innerHTML = `
-      <form id="rentalForm">
-        ...existing code...
-      </form>
-    `;
-    container.appendChild(div.firstElementChild);
-  }
+  // Template único do formulário
+  const formHtml = `
     <form id="rentalForm" class="container">
       <div class="brand-header centered" style="margin-bottom: 0;">
         <img src="assets/logo.png" alt="Logo Kito Locações" class="logo-img" style="margin-bottom: 0;" />
@@ -109,6 +89,20 @@ function renderFormNota() {
       <div id="pdfLink"></div>
     </form>
   `;
+
+  let container;
+  if (document.getElementById('app-content')) {
+    container = document.getElementById('app-content');
+    container.innerHTML = formHtml;
+  } else {
+    container = document.querySelector('.container.futurista');
+    // Remove formulário antigo se existir
+    const formSection = container.querySelector('form#rentalForm');
+    if (formSection) formSection.remove();
+    const div = document.createElement('div');
+    div.innerHTML = formHtml;
+    container.appendChild(div.firstElementChild);
+  }
 
   // Validação: só números no CPF/CNPJ
   const cpfCnpjInput = document.querySelector('input[name="cpf_cnpj"]');
