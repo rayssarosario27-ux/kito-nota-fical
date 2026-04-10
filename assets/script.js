@@ -50,7 +50,7 @@ function renderFormNota() {
             <input type="text" name="cliente" required placeholder="Nome completo">
           </label>
           <label>CPF/CNPJ
-            <input type="text" name="cpf_cnpj" required maxlength="14" pattern="\d+" placeholder="Somente números">
+            <input type="text" name="cpf_cnpj" required maxlength="18" placeholder="CPF ou CNPJ">
           </label>
         </div>
         <div class="form-row">
@@ -126,10 +126,23 @@ function renderFormNota() {
     container.appendChild(div.firstElementChild);
   }
 
-  // Validação: só números no CPF/CNPJ
+  // Máscara dinâmica para CPF/CNPJ
   const cpfCnpjInput = document.querySelector('input[name="cpf_cnpj"]');
   cpfCnpjInput.addEventListener('input', (e) => {
-    e.target.value = e.target.value.replace(/\D/g, '');
+    let v = e.target.value.replace(/\D/g, '');
+    if (v.length <= 11) {
+      // CPF: 000.000.000-00
+      v = v.replace(/(\d{3})(\d)/, '$1.$2');
+      v = v.replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+      v = v.replace(/(\d{3})\.(\d{3})\.(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+    } else {
+      // CNPJ: 00.000.000/0000-00
+      v = v.replace(/(\d{2})(\d)/, '$1.$2');
+      v = v.replace(/(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+      v = v.replace(/(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4');
+      v = v.replace(/(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d{1,2})/, '$1.$2.$3/$4-$5');
+    }
+    e.target.value = v;
   });
   // Máscara de celular
   const celInput = document.querySelector('input[name="celular_cliente"]');
@@ -172,6 +185,12 @@ function renderFormNota() {
     const form = e.target;
     const cliente = form.cliente.value;
     const cpfCnpj = form.cpf_cnpj.value;
+    // Validação simples de CPF/CNPJ (apenas formato, não dígito verificador)
+    const cpfCnpjLimpo = cpfCnpj.replace(/\D/g, '');
+    if (!(cpfCnpjLimpo.length === 11 || cpfCnpjLimpo.length === 14)) {
+      alert('Digite um CPF (11 dígitos) ou CNPJ (14 dígitos) válido.');
+      return;
+    }
     const enderecoEntrega = form.endereco_entrega.value;
     const celularCliente = form.celular_cliente.value;
     const emailCliente = form.soCelular.checked ? '' : form.email_cliente.value;
