@@ -175,6 +175,7 @@ function renderFormNota() {
     else if (v.length > 2) e.target.value = v.replace(/(\d{2})(\d{0,5})/, '($1) $2');
     else e.target.value = v;
   });
+}
   // Alternar campo email
   const soCelular = document.getElementById('soCelular');
   const emailRow = document.getElementById('emailRow');
