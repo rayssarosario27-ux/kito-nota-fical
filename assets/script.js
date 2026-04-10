@@ -8,15 +8,22 @@ document.addEventListener('DOMContentLoaded', function() {
   if (cardGerar) {
     cardGerar.onclick = (e) => {
       e.preventDefault();
-      window.location.pathname = window.location.pathname.replace(/\/[^/]*$/, '/gerar.html');
+      renderFormNota();
     };
   }
   if (cardVisualizar) {
     cardVisualizar.onclick = (e) => {
       e.preventDefault();
-      window.location.pathname = window.location.pathname.replace(/\/[^/]*$/, '/visualizar.html');
+      renderVisualizarNotas();
     };
   }
+// Renderização SPA para Visualizar Notas
+function renderVisualizarNotas() {
+  const container = document.getElementById('app-content');
+  if (container) {
+    container.innerHTML = `<div class='nota-card-mock'>Nenhuma nota encontrada (mock)</div>`;
+  }
+}
 });
 
 
