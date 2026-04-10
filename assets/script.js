@@ -19,9 +19,17 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Carrega jsPDF de CDN
+
+// Carrega jsPDF de CDN e garante disponibilidade antes de usar
+let jsPDFReady = false;
+let jsPDFResolve;
+const jsPDFPromise = new Promise((resolve) => { jsPDFResolve = resolve; });
 const script = document.createElement('script');
 script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+script.onload = () => {
+  jsPDFReady = true;
+  jsPDFResolve();
+};
 document.head.appendChild(script);
 
 function renderFormNota() {
@@ -106,8 +114,9 @@ function renderFormNota() {
   toggleMesas();
   toggleCadeiras();
 
-  document.getElementById('rentalForm').addEventListener('submit', function(e) {
+  document.getElementById('rentalForm').addEventListener('submit', async function(e) {
     e.preventDefault();
+    await jsPDFPromise;
     const form = e.target;
     const cliente = form.cliente.value;
     const cpfCnpj = form.cpf_cnpj.value;
