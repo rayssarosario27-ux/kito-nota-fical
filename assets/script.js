@@ -69,20 +69,6 @@ function renderFormNota() {
             <input type="checkbox" id="semCep" name="semCep" style="width:18px; height:18px;"> Sem CEP
           </label>
         </div>
-          // Máscara de CEP
-          const cepInput = document.getElementById('cep_entrega');
-          cepInput.addEventListener('input', (e) => {
-            let v = e.target.value.replace(/\D/g, '');
-            if (v.length > 8) v = v.slice(0,8);
-            if (v.length > 5) v = v.replace(/(\d{5})(\d{1,3})/, '$1-$2');
-            e.target.value = v;
-          });
-          // Alternar campo CEP
-          const semCep = document.getElementById('semCep');
-          semCep.addEventListener('change', () => {
-            cepInput.disabled = semCep.checked;
-            if (semCep.checked) cepInput.value = '';
-          });
         <div class="form-row">
           <label>Celular
             <input type="text" name="celular_cliente" required placeholder="(99) 99999-9999" maxlength="15">
