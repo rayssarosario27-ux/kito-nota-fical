@@ -361,7 +361,7 @@ function renderFormNota() {
     let cy = y + 4;
     clausula.forEach(l => {
       doc.text(l, 20, cy, { maxWidth: 170 });
-      cy += 5.2;
+      cy += 7.2;
     });
     y = cy + 16;
     // Assinaturas (após cláusulas, centralizadas)
