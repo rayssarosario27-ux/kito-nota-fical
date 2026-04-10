@@ -1,5 +1,5 @@
 /* --- LAYOUT MODERNO, MINIMALISTA E FUTURISTA --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Montserrat:wght@400;600;700&display=swap');
 
 body, html {
   font-family: 'Montserrat', 'Inter', Arial, sans-serif;
@@ -16,7 +16,7 @@ body, html {
 }
 
 .main-title-home {
-  color: #00eaff;
+  color: #00fff7;
   font-size: 2.5em;
   font-weight: 800;
   letter-spacing: 1.5px;
@@ -99,19 +99,19 @@ body, html {
   background: linear-gradient(90deg, #3949ab 0%, #00eaff 100%);
   box-shadow: 0 6px 24px #00eaff44;
   transform: translateY(-2px) scale(1.03);
-}
-
-.header-title-home {
-  color: #00eaff;
-  font-size: 2.2em;
-  font-weight: 900;
-  letter-spacing: 1.5px;
-  text-align: center;
-  margin-bottom: 32px;
-  text-shadow: 0 2px 18px #232a4d99, 0 1px 8px #00eaff44;
-}
-
-.form-section, .filtros-notas, .nota-card-mock, .form-row label, .btn-main {
+  .futurista {
+    background: linear-gradient(135deg, #0a0c13 0%, #1a1f3c 60%, #00eaff 100%);
+    box-shadow: 0 8px 40px 0 #00fff733, 0 1.5px 6px #00eaff22;
+    border-radius: 28px;
+    padding: 44px 36px 38px 36px;
+    margin-top: 48px;
+    max-width: 540px;
+    min-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2.5px solid #00fff744;
+    animation: gradientMove 12s ease-in-out infinite alternate;
+  }
   border-radius: 14px;
   background: rgba(0,234,255,0.07);
   box-shadow: 0 2px 12px #00eaff11;

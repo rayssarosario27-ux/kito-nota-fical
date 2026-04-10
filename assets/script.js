@@ -55,9 +55,34 @@ function renderFormNota() {
         </div>
         <div class="form-row">
           <label>Endereço de Entrega
-            <input type="text" name="endereco_entrega" required placeholder="Rua, número, bairro, cidade">
+            <input type="text" name="endereco_entrega" required placeholder="Rua, bairro, cidade">
+          </label>
+          <label>Número
+            <input type="text" name="numero_entrega" required placeholder="Nº">
           </label>
         </div>
+        <div class="form-row">
+          <label>CEP
+            <input type="text" name="cep_entrega" id="cep_entrega" maxlength="9" placeholder="00000-000">
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;">
+            <input type="checkbox" id="semCep" name="semCep" style="width:18px; height:18px;"> Sem CEP
+          </label>
+        </div>
+          // Máscara de CEP
+          const cepInput = document.getElementById('cep_entrega');
+          cepInput.addEventListener('input', (e) => {
+            let v = e.target.value.replace(/\D/g, '');
+            if (v.length > 8) v = v.slice(0,8);
+            if (v.length > 5) v = v.replace(/(\d{5})(\d{1,3})/, '$1-$2');
+            e.target.value = v;
+          });
+          // Alternar campo CEP
+          const semCep = document.getElementById('semCep');
+          semCep.addEventListener('change', () => {
+            cepInput.disabled = semCep.checked;
+            if (semCep.checked) cepInput.value = '';
+          });
         <div class="form-row">
           <label>Celular
             <input type="text" name="celular_cliente" required placeholder="(99) 99999-9999" maxlength="15">
@@ -192,6 +217,8 @@ function renderFormNota() {
       return;
     }
     const enderecoEntrega = form.endereco_entrega.value;
+    const numeroEntrega = form.numero_entrega.value;
+    const cepEntrega = form.semCep.checked ? 'Sem CEP' : form.cep_entrega.value;
     const celularCliente = form.celular_cliente.value;
     const emailCliente = form.soCelular.checked ? '' : form.email_cliente.value;
     const dataEmissao = form.data_emissao.value;
@@ -222,16 +249,19 @@ function renderFormNota() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Cabeçalho profissional
+    // Cabeçalho futurista
     doc.setFillColor(0, 234, 255);
-    doc.roundedRect(20, 12, 170, 28, 12, 12, 'F');
+    doc.roundedRect(25, 14, 160, 32, 18, 18, 'F');
+    doc.setDrawColor(0, 234, 255);
+    doc.setLineWidth(1.5);
+    doc.roundedRect(25, 14, 160, 32, 18, 18, 'S');
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(30, 42, 120);
-    doc.setFontSize(24);
-    doc.text(empresa.nome, 105, 28, { align: 'center' });
-    doc.setFontSize(13);
-    doc.setTextColor(33,33,33);
-    doc.text('Aluguel de Mesas e Cadeiras', 105, 38, { align: 'center' });
+    doc.setTextColor(10, 30, 80);
+    doc.setFontSize(25);
+    doc.text(empresa.nome, 105, 32, { align: 'center' });
+    doc.setFontSize(14);
+    doc.setTextColor(0, 80, 255);
+    doc.text('Aluguel de Mesas e Cadeiras', 105, 42, { align: 'center' });
 
     // Linha divisória
     doc.setDrawColor(0, 234, 255);
@@ -261,7 +291,9 @@ function renderFormNota() {
     y += 7;
     doc.text(`CPF/CNPJ: ${cpfCnpj}`, 25, y);
     y += 7;
-    doc.text(`Endereço de Entrega: ${enderecoEntrega}`, 25, y);
+    doc.text(`Endereço de Entrega: ${enderecoEntrega}, Nº ${numeroEntrega}`, 25, y);
+    y += 7;
+    doc.text(`CEP: ${cepEntrega}`, 25, y);
     y += 7;
     doc.text(`Celular: ${celularCliente}`, 25, y);
     if (emailCliente) {
@@ -306,15 +338,45 @@ function renderFormNota() {
     doc.setTextColor(33,33,33);
     doc.text(`R$ ${valor}`, 60, y);
 
-    // Espaço para assinaturas
+    // Assinaturas reforçadas
     y += 20;
-    doc.setDrawColor(200,200,200);
+    doc.setLineWidth(1.2);
+    doc.setDrawColor(0, 234, 255);
     doc.line(25, y, 100, y); // Cliente
     doc.line(115, y, 190, y); // Empresa
-    doc.setFontSize(10);
-    doc.setTextColor(120,120,120);
-    doc.text('Assinatura do Cliente', 27, y + 6);
-    doc.text('Assinatura Kito Locações', 117, y + 6);
+    doc.setFontSize(11);
+    doc.setTextColor(0, 80, 255);
+    doc.text('Assinatura do Cliente', 27, y + 7);
+    doc.text('Assinatura Kito Locações', 117, y + 7);
+    y += 18;
+    // Cláusula de responsabilidade
+    doc.setFontSize(11);
+    doc.setTextColor(30, 42, 120);
+    doc.text('Cláusula de Responsabilidade e Danos', 105, y, { align: 'center' });
+    y += 7;
+    doc.setFontSize(9.5);
+    doc.setTextColor(60,60,60);
+    const clausula = [
+      '7. DA CONSERVAÇÃO E DEVOLUÇÃO:',
+      'O LOCATÁRIO declara receber o mobiliário (mesas e cadeiras) em perfeito estado de conservação e limpeza,',
+      'obrigando-se a devolvê-lo da mesma forma.',
+      '',
+      '7.1. Danos e Avarias: Em caso de quebra, furos, queimaduras de cigarro, manchas persistentes (tinta, gordura ou mofo)',
+      'ou qualquer dano que inutilize o material, o LOCATÁRIO arcará com o valor de reposição de mercado de cada item danificado.',
+      '',
+      '7.2. Extravio: Em caso de perda ou furto dos itens locados, o LOCATÁRIO deverá indenizar a Kito Locações',
+      'pelo valor total de um item novo equivalente.',
+      '',
+      '7.3. Limpeza: As mesas e cadeiras não devem ser riscadas ou receber colagem de adesivos/fitas que danifiquem a pintura ou o material plástico.',
+      '',
+      '7.4. Prazo: A não devolução na data estipulada acarretará em multa diária de 10% sobre o valor total do contrato,',
+      'além do custo da diária adicional.'
+    ];
+    let cy = y + 4;
+    clausula.forEach(l => {
+      doc.text(l, 20, cy, { maxWidth: 170 });
+      cy += 5.2;
+    });
 
     // Baixa PDF
     doc.save(`nota-fiscal-${cliente.replace(/\s+/g, '_')}.pdf`);
